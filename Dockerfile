@@ -24,6 +24,9 @@ RUN echo 'session.save_path = "/var/www/html/sessions"' >> /usr/local/etc/php/co
 # Set proper permissions for all files
 RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html && chmod 777 /var/www/html/sessions
 
+# Make .env file writable by www-data for password updates
+RUN chmod 644 /var/www/html/.env 2>/dev/null || true
+
 # Copy application files
 COPY . /var/www/html/
 
