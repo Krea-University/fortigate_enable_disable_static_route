@@ -1,0 +1,26 @@
+# Environment Configuration (DO NOT COMMIT .env)
+.env
+.env.local
+.env.*.local
+
+# Logs and Session Data
+*.log
+sessions/
+
+# System Files
+.DS_Store
+.idea/
+.vscode/
+.project
+.classpath
+.c9/
+
+# Dependencies and Build
+node_modules/
+composer.lock
+*.swp
+*.swo
+*~
+
+# Temporary Files
+.htaccess
