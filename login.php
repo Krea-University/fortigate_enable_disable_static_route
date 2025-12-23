@@ -12,10 +12,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($username) || empty($password)) {
         $error = 'Username and password are required';
     } elseif (Session::login($username, $password)) {
-        // Mark as first login for password change
-        Session::set('first_login', true);
-        header('Location: change-password.php');
-        exit;
+        // Check if password has already been changed
+        $passwordChanged = Config::get('PASSWORD_CHANGED', 'false');
+        if ($passwordChanged === 'true') {
+            // Password already changed, go to dashboard
+            header('Location: dashboard.php');
+            exit;
+        } else {
+            // First login, require password change
+            Session::set('first_login', true);
+            header('Location: change-password.php');
+            exit;
+        }
     } else {
         $error = 'Invalid username or password';
     }

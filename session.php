@@ -77,4 +77,30 @@ class Session {
 
         return false;
     }
+
+    public static function setPasswordChangedFlag($changed) {
+        $envFile = __DIR__ . '/.env';
+        
+        if (!file_exists($envFile)) {
+            return false;
+        }
+
+        $lines = file($envFile, FILE_IGNORE_NEW_LINES);
+        $found = false;
+        $value = $changed ? 'true' : 'false';
+
+        foreach ($lines as &$line) {
+            if (strpos($line, 'PASSWORD_CHANGED=') === 0) {
+                $line = 'PASSWORD_CHANGED=' . $value;
+                $found = true;
+            }
+        }
+
+        // Add the line if not found
+        if (!$found) {
+            $lines[] = 'PASSWORD_CHANGED=' . $value;
+        }
+
+        return file_put_contents($envFile, implode("\n", $lines)) !== false;
+    }
 }

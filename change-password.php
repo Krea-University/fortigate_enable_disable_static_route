@@ -40,6 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Update password in .env file
             $updated = Session::updatePassword($newPassword);
             if ($updated) {
+                // Set PASSWORD_CHANGED flag in .env
+                Session::setPasswordChangedFlag(true);
                 // Clear first_login flag
                 Session::set('first_login', false);
                 Session::set('password_changed', true);
